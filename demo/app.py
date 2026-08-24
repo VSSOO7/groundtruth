@@ -11,18 +11,26 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from pathlib import Path
 
 # Threading guards for tokenizers and OpenMP
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 
-import pandas as pd
-import plotly.graph_objects as go
-import streamlit as st
+# Ensure src/ and root are in Python module search path
+_root = Path(__file__).resolve().parent.parent
+if str(_root / "src") not in sys.path:
+    sys.path.insert(0, str(_root / "src"))
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
 
-from demo.standalone_engine import StandaloneDemoEngine
-from groundtruth.retrieval.types import Filters
+import pandas as pd  # noqa: E402
+import plotly.graph_objects as go  # noqa: E402
+import streamlit as st  # noqa: E402
+
+from demo.standalone_engine import StandaloneDemoEngine  # noqa: E402
+from groundtruth.retrieval.types import Filters  # noqa: E402
 
 # -----------------------------------------------------------------------------
 # Page Configuration & Styling

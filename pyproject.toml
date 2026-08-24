@@ -29,6 +29,8 @@ dependencies = [
     "opentelemetry-sdk>=1.28,<2.0",
     "opentelemetry-instrumentation-fastapi>=0.49b0",
     "prometheus-client>=0.21,<1.0",
+    "streamlit>=1.38,<2.0",
+    "plotly>=5.24,<6.0",
 ]
 
 [project.optional-dependencies]
@@ -37,10 +39,6 @@ dev = [
     "pytest-asyncio>=0.24,<2.0",
     "ruff>=0.7,<1.0",
     "mypy>=1.13,<2.0",
-]
-demo = [
-    "streamlit>=1.38,<2.0",
-    "plotly>=5.24,<6.0",
 ]
 
 [build-system]

@@ -355,6 +355,7 @@ dependencies = [
     { name = "opentelemetry-instrumentation-fastapi" },
     { name = "opentelemetry-sdk" },
     { name = "pgvector" },
+    { name = "plotly" },
     { name = "prometheus-client" },
     { name = "psycopg", extra = ["binary", "pool"] },
     { name = "pydantic" },
@@ -362,6 +363,7 @@ dependencies = [
     { name = "scikit-learn" },
     { name = "selectolax" },
     { name = "sentence-transformers" },
+    { name = "streamlit" },
     { name = "structlog" },
     { name = "tenacity" },
     { name = "tiktoken" },
@@ -373,10 +375,6 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-demo = [
-    { name = "plotly" },
-    { name = "streamlit" },
-]
 dev = [
     { name = "mypy" },
     { name = "pytest" },
@@ -394,7 +392,7 @@ requires-dist = [
     { name = "opentelemetry-instrumentation-fastapi", specifier = ">=0.49b0" },
     { name = "opentelemetry-sdk", specifier = ">=1.28,<2.0" },
     { name = "pgvector", specifier = ">=0.3.6,<0.4" },
-    { name = "plotly", marker = "extra == 'demo'", specifier = ">=5.24,<6.0" },
+    { name = "plotly", specifier = ">=5.24,<6.0" },
     { name = "prometheus-client", specifier = ">=0.21,<1.0" },
     { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.2,<4.0" },
     { name = "pydantic", specifier = ">=2.9,<3.0" },
@@ -405,7 +403,7 @@ requires-dist = [
     { name = "scikit-learn", specifier = ">=1.5,<2.0" },
     { name = "selectolax", specifier = ">=0.3.21,<0.4" },
     { name = "sentence-transformers", specifier = ">=3.2,<6.0" },
-    { name = "streamlit", marker = "extra == 'demo'", specifier = ">=1.38,<2.0" },
+    { name = "streamlit", specifier = ">=1.38,<2.0" },
     { name = "structlog", specifier = ">=24.4,<26.0" },
     { name = "tenacity", specifier = ">=9.0,<10.0" },
     { name = "tiktoken", specifier = ">=0.8,<1.0" },
@@ -414,7 +412,7 @@ requires-dist = [
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32,<1.0" },
     { name = "xgboost", specifier = ">=2.1,<4.0" },
 ]
-provides-extras = ["dev", "demo"]
+provides-extras = ["dev"]
 
 [[package]]
 name = "h11"

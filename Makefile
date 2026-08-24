@@ -114,4 +114,4 @@ serve: ## Run the API locally (reload)
 
 .PHONY: demo
 demo: ## Run the interactive Streamlit showcase app
-	uv run --extra demo streamlit run demo/app.py
+	uv run streamlit run demo/app.py
