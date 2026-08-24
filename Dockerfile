@@ -4,9 +4,15 @@
 FROM python:3.11-slim AS builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 WORKDIR /app
-ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1
-COPY pyproject.toml ./
-RUN uv venv /opt/venv && VIRTUAL_ENV=/opt/venv uv pip install -r pyproject.toml
+ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1 UV_PROJECT_ENVIRONMENT=/opt/venv
+# Copy the lockfile too: `uv sync --frozen` installs the exact versions CI
+# tested. Installing from pyproject.toml alone re-resolves on every build, so
+# the image could ship dependency versions no test ever ran against.
+# The venv is built at its FINAL path (/opt/venv) because console-script
+# shebangs bake in an absolute interpreter path -- building at /app/.venv and
+# copying would leave `uvicorn` pointing at a directory the runtime lacks.
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
 
 # ---- runtime: no build toolchain, non-root ----
 FROM python:3.11-slim AS runtime

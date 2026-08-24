@@ -17,6 +17,12 @@ dependencies = [
     "scikit-learn>=1.5,<2.0",
     "xgboost>=2.1,<4.0",
     "sentence-transformers>=3.2,<6.0",
+    # torch arrives transitively via sentence-transformers, but is declared here
+    # explicitly so the CPU-only index below can be attached to it. On Linux,
+    # PyPI's default torch wheel drags in ~2.5 GB of CUDA runtime libraries that
+    # this service never touches -- embedding runs on CPU. Left unpinned it
+    # dominates image size and CI build time.
+    "torch>=2.2",
     "anthropic>=0.39,<1.0",
     "tenacity>=9.0,<10.0",
     "structlog>=24.4,<26.0",
@@ -36,6 +42,19 @@ dev = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+# --- CPU-only torch -------------------------------------------------------
+# Only Linux is redirected. PyPI already serves CPU-only wheels on macOS and
+# Windows, so pinning those to the pytorch index would break local dev on a Mac
+# for no benefit. `explicit = true` keeps this index scoped to torch alone --
+# every other dependency still resolves from PyPI.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/groundtruth"]
