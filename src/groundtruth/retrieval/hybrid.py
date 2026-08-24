@@ -100,7 +100,7 @@ def retrieve_candidates(
 
     with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         # Session-scoped: trades latency for recall on the HNSW graph walk.
-        cur.execute("SET LOCAL hnsw.ef_search = %s", (settings.hnsw_ef_search,))
+        cur.execute(f"SET LOCAL hnsw.ef_search = {int(settings.hnsw_ef_search)}")
         cur.execute(_HYBRID_SQL, params)
         rows = cur.fetchall()
 
