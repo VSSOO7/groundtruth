@@ -107,7 +107,11 @@ ablation: ## Reproduce the README ablation: RRF baseline vs learned reranker
 	uv run python -m groundtruth.eval.run_eval --tag "reranked" --json-out eval/reranked.json
 	@echo "Compare eval/rrf_only.json and eval/reranked.json for the nDCG lift."
 
-# --- Serving ---------------------------------------------------------------
+# --- Serving & Demo --------------------------------------------------------
 .PHONY: serve
 serve: ## Run the API locally (reload)
 	uv run uvicorn groundtruth.api.main:app --reload --port 8000
+
+.PHONY: demo
+demo: ## Run the interactive Streamlit showcase app
+	uv run --extra demo streamlit run demo/app.py

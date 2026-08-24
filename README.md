@@ -1,11 +1,37 @@
 # groundtruth
 
+[![CI](https://github.com/VSSOO7/groundtruth/actions/workflows/ci.yml/badge.svg)](https://github.com/VSSOO7/groundtruth/actions)
+![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
+![PostgreSQL pgvector](https://img.shields.io/badge/Postgres_16-pgvector-336791.svg)
+![XGBoost LambdaMART](https://img.shields.io/badge/Reranker-XGBoost_LambdaMART-orange.svg)
+![Demo](https://img.shields.io/badge/Demo-Interactive_Streamlit_App-2563eb.svg)
+
 **Production RAG over SEC filings — with a *trained* reranker and an evaluation harness that gates CI.**
 
 Ask a question about a 10-K. Get an answer where **every claim carries a citation to
 the exact chunk that supports it**, or an explicit refusal when the retrieved
 evidence doesn't support an answer. A confident wrong answer about a company's
 financials is worse than no answer, so the system is built to refuse.
+
+---
+
+## 🚀 Interactive Showcase App
+
+Run the interactive web dashboard with a single command:
+
+```bash
+make demo
+```
+
+The interactive application includes:
+- **🔍 Financial Analyst Q&A**: Real-time query execution over SEC 10-K filings with live confidence gauges, claim-by-claim citation verification, and timing waterfalls (`Embed` ➔ `Hybrid Search` ➔ `XGBoost Rerank` ➔ `Generate`).
+- **⚡ Hybrid Retrieval & XGBoost Visualizer**: Side-by-side comparison of Sparse BM25 vs Dense HNSW vs RRF vs learned LambdaMART scores, with interactive 15-feature vector inspection.
+- **📊 CI Benchmark & Eval Gate**: Live nDCG@10 evaluator and regression gate simulator.
+- **📁 SEC Filing Explorer**: Browse indexed 10-K sections and metadata.
+
+---
+
+### Example API Query
 
 ```bash
 curl -s localhost:8000/query -H 'content-type: application/json' -d '{
@@ -81,10 +107,10 @@ every other number in this README trustworthy.
                            │  falls back to RRF order if no model artifact   │
                            └────────────────────────┬────────────────────────┘
                                                     ▼  dedupe ≤3/doc, top 8
-                           ┌──── Claude (structured output + caching) ───────┐
-                           │  grounding contract: every claim cites ≥1 chunk │
-                           │  hallucinated chunk_ids stripped → refuse       │
-                           └────────────────────────┬────────────────────────┘
+                            ┌── LLM Generator (structured output + caching) ──┐
+                            │  grounding contract: every claim cites ≥1 chunk │
+                            │  hallucinated chunk_ids stripped → refuse       │
+                            └────────────────────────┬────────────────────────┘
                                                     ▼
                                    FastAPI  /query  /healthz  /readyz  /metrics
                                             └─▶ Prometheus → Grafana
