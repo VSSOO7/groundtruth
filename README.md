@@ -1,12 +1,14 @@
 # groundtruth
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit_App-2563eb?style=for-the-badge&logo=streamlit)](https://groundtruth-yrkawubcvnqfwplwr6h7uo.streamlit.app/)
 [![CI](https://github.com/VSSOO7/groundtruth/actions/workflows/ci.yml/badge.svg)](https://github.com/VSSOO7/groundtruth/actions)
 ![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
 ![PostgreSQL pgvector](https://img.shields.io/badge/Postgres_16-pgvector-336791.svg)
 ![XGBoost LambdaMART](https://img.shields.io/badge/Reranker-XGBoost_LambdaMART-orange.svg)
-![Demo](https://img.shields.io/badge/Demo-Interactive_Streamlit_App-2563eb.svg)
 
 **Production RAG over SEC filings — with a *trained* reranker and an evaluation harness that gates CI.**
+
+🔗 **Live Interactive App**: **[groundtruth-yrkawubcvnqfwplwr6h7uo.streamlit.app](https://groundtruth-yrkawubcvnqfwplwr6h7uo.streamlit.app/)**
 
 Ask a question about a 10-K. Get an answer where **every claim carries a citation to
 the exact chunk that supports it**, or an explicit refusal when the retrieved
@@ -15,15 +17,10 @@ financials is worse than no answer, so the system is built to refuse.
 
 ---
 
-## 🚀 Interactive Showcase App
+## 🚀 Live Interactive Showcase
 
-Run the interactive web dashboard with a single command:
+Experience the live system directly in your browser: **[groundtruth-yrkawubcvnqfwplwr6h7uo.streamlit.app](https://groundtruth-yrkawubcvnqfwplwr6h7uo.streamlit.app/)** *(or run locally via `make demo`)*
 
-```bash
-make demo
-```
-
-The interactive application includes:
 - **🔍 Financial Analyst Q&A**: Real-time query execution over SEC 10-K filings with live confidence gauges, claim-by-claim citation verification, and timing waterfalls (`Embed` ➔ `Hybrid Search` ➔ `XGBoost Rerank` ➔ `Generate`).
 - **⚡ Hybrid Retrieval & XGBoost Visualizer**: Side-by-side comparison of Sparse BM25 vs Dense HNSW vs RRF vs learned LambdaMART scores, with interactive 15-feature vector inspection.
 - **📊 CI Benchmark & Eval Gate**: Live nDCG@10 evaluator and regression gate simulator.
