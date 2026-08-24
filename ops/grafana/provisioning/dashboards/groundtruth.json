@@ -1,0 +1,92 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "title": "groundtruth — RAG service",
+  "uid": "groundtruth-rag",
+  "schemaVersion": 39,
+  "version": 1,
+  "time": { "from": "now-1h", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Query rate (by outcome)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "fieldConfig": { "defaults": { "unit": "reqps" }, "overrides": [] },
+      "targets": [
+        {
+          "expr": "sum by (refused) (rate(gt_queries_total[5m]))",
+          "legendFormat": "refused={{refused}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Refusal rate (5m)",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.25 },
+              { "color": "red", "value": 0.5 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(gt_queries_total{refused=\"true\"}[5m])) / clamp_min(sum(rate(gt_queries_total[5m])), 1e-9)",
+          "legendFormat": "refusal rate"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Reranker active share",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 0 },
+      "fieldConfig": { "defaults": { "unit": "percentunit" } },
+      "targets": [
+        {
+          "expr": "sum(rate(gt_queries_total{reranker=\"true\"}[5m])) / clamp_min(sum(rate(gt_queries_total[5m])), 1e-9)",
+          "legendFormat": "reranked"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Per-stage latency p95 (ms)",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 8 },
+      "fieldConfig": { "defaults": { "unit": "ms" }, "overrides": [] },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (stage, le) (rate(gt_stage_latency_ms_bucket[5m])))",
+          "legendFormat": "{{stage}} p95"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "End-to-end latency p50 / p95 / p99 (ms)",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 8 },
+      "fieldConfig": { "defaults": { "unit": "ms" }, "overrides": [] },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, sum by (le) (rate(gt_stage_latency_ms_bucket[5m])))",
+          "legendFormat": "p50"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(gt_stage_latency_ms_bucket[5m])))",
+          "legendFormat": "p95"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(gt_stage_latency_ms_bucket[5m])))",
+          "legendFormat": "p99"
+        }
+      ]
+    }
+  ]
+}

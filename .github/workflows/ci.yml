@@ -1,0 +1,146 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to the same PR cancels the in-flight run -- CI minutes are not free.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Fast lane: lint, types, and the pure-logic tests. No database, no model
+  # download, no API key. This is what catches most breakage, so it runs first
+  # and independently -- a slow integration job should never delay this signal.
+  # ---------------------------------------------------------------------------
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install
+        run: uv sync --extra dev
+
+      - name: Ruff (lint + format check)
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Mypy
+        run: uv run mypy src/groundtruth
+
+      - name: Unit tests
+        # Exclude anything needing Postgres or an API key; those run in `eval`.
+        run: uv run pytest -m "not integration and not llm" --junitxml=junit.xml
+
+      - name: Publish test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit
+          path: junit.xml
+
+  # ---------------------------------------------------------------------------
+  # The regression gate. Boots pgvector, applies the schema, loads the committed
+  # eval fixture, runs retrieval, and fails the PR if nDCG@10 drops more than the
+  # tolerance below eval/baseline.json.
+  #
+  # This is the job that makes the eval harness load-bearing: without it, a
+  # chunker or fusion tweak that quietly costs 8% nDCG merges unnoticed.
+  # ---------------------------------------------------------------------------
+  eval:
+    runs-on: ubuntu-latest
+    needs: quality
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: groundtruth
+          POSTGRES_PASSWORD: groundtruth
+          POSTGRES_DB: groundtruth
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U groundtruth -d groundtruth"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+
+    env:
+      DATABASE_URL: postgresql://groundtruth:groundtruth@localhost:5432/groundtruth
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install
+        run: uv sync --extra dev
+
+      - name: Apply schema
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/schema.sql
+
+      - name: Cache embedding model
+        uses: actions/cache@v4
+        with:
+          # Keyed on the model name so a model swap misses the cache rather than
+          # silently serving embeddings from the previous model.
+          key: hf-${{ hashFiles('src/groundtruth/config.py') }}
+          path: ~/.cache/huggingface
+
+      - name: Load eval fixture corpus
+        # A small committed corpus + golden set keeps the gate hermetic: no SEC
+        # network calls, no rate limits, no flakiness from upstream restatements.
+        run: uv run python -m groundtruth.eval.fixture --load
+
+      - name: Run eval
+        run: uv run python -m groundtruth.eval.run_eval --tag "ci-${{ github.sha }}" --json-out eval/last_run.json
+
+      - name: Regression gate
+        run: uv run python -m groundtruth.eval.gate --baseline eval/baseline.json --candidate eval/last_run.json
+
+      - name: Upload eval run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-run
+          path: eval/last_run.json
+
+  # ---------------------------------------------------------------------------
+  # Build the image on every PR so a broken Dockerfile is caught before merge,
+  # but only push from main.
+  # ---------------------------------------------------------------------------
+  image:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime
+          push: false
+          tags: groundtruth:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

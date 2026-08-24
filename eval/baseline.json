@@ -1,0 +1,26 @@
+{
+  "_note": "SEED BASELINE -- not a measured run. The regression gate compares each PR's nDCG@10 against the `metrics` block below. These are deliberately conservative floor values so the FIRST real CI run passes; regenerate against your actual corpus with `make eval-baseline` (which runs the eval and overwrites this file) so that subsequent PRs are gated on the true number, not this floor.",
+  "_regenerate": "make eval-baseline    # or: python -m groundtruth.eval.run_eval --json-out eval/baseline.json",
+  "git_sha": "seed",
+  "config": {
+    "tag": "seed-baseline",
+    "reranker_active": false
+  },
+  "metrics": {
+    "overall": {
+      "ndcg@10": 0.50,
+      "recall@50": 0.50,
+      "mrr": 0.50,
+      "hit@10": 0.50
+    },
+    "human_verified": {
+      "ndcg@10": 0.50,
+      "recall@50": 0.50,
+      "mrr": 0.50,
+      "hit@10": 0.50
+    },
+    "n_queries": 0,
+    "n_human_verified": 0,
+    "reranker_active": false
+  }
+}

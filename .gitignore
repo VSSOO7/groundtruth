@@ -1,0 +1,48 @@
+# Environment / secrets
+.env
+.env.local
+*.pem
+*.key
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Data & models (large / regenerable)
+data/raw/
+data/interim/
+data/processed/
+data/training/
+models/*.json
+models/*.ubj
+models/*.pkl
+!models/.gitkeep
+.cache/
+hf_cache/
+
+# Eval artifacts. The committed baseline (eval/baseline.json) is the CI gate's
+# reference point and MUST stay tracked; per-run outputs are not.
+eval_runs/
+eval/last_run.json
+!eval/baseline.json
+
+# OS / editor / tooling
+.DS_Store
+.idea/
+.vscode/
+.claude/
+*.swp
+
+# Notebooks
+.ipynb_checkpoints/

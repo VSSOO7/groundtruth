@@ -1,0 +1,258 @@
+{
+  "_comment": [
+    "Hermetic eval fixture. Synthetic 10-K-style passages written for this repo --",
+    "not SEC content -- so CI needs no network, no rate limits, and no API key, and",
+    "the golden labels stay stable across upstream restatements.",
+    "",
+    "One chunk is inserted per passage (the chunker has its own unit tests), so",
+    "labels can reference passages directly and the gate measures exactly what it",
+    "claims to: hybrid fusion + reranking + the metrics."
+  ],
+  "documents": [
+    {
+      "accession_no": "0000000000-24-000001",
+      "cik": "0000000001",
+      "company_name": "Northwind Logistics Inc.",
+      "ticker": "NWL",
+      "form_type": "10-K",
+      "fiscal_year": 2024,
+      "filed_date": "2025-02-14",
+      "passages": [
+        {
+          "id": "nwl-risk-fuel",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "Our results of operations are sensitive to changes in the price of diesel fuel. Fuel represented 14.2% of total operating expenses in fiscal 2024, compared with 11.8% in fiscal 2023. We do not currently hedge our diesel exposure with derivative instruments. A sustained $0.25 per gallon increase in the average price of diesel would, holding volumes constant, reduce annual operating income by approximately $18.4 million."
+        },
+        {
+          "id": "nwl-risk-labor",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "A shortage of qualified commercial drivers could constrain our ability to meet customer demand. As of December 31, 2024, approximately 62% of our drivers were covered by collective bargaining agreements, three of which expire during fiscal 2026. A work stoppage at any of our four primary distribution hubs could materially disrupt service to customers in the affected region."
+        },
+        {
+          "id": "nwl-risk-cyber",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "We depend on information technology systems to route shipments and manage warehouse operations. A cybersecurity incident affecting our transportation management platform could interrupt operations, expose customer data, and subject us to regulatory penalties. We maintain cyber liability insurance, but coverage may be insufficient to offset all losses arising from a significant incident."
+        },
+        {
+          "id": "nwl-mdna-revenue",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "Total revenue increased 8.3% to $2,417.9 million in fiscal 2024 from $2,232.6 million in fiscal 2023. The increase was driven primarily by a 5.1% rise in shipment volume and a 3.0% increase in average revenue per shipment. Revenue in our Contract Logistics segment grew 12.6%, while Freight Brokerage revenue declined 2.4% as spot market rates normalized from prior-year highs."
+        },
+        {
+          "id": "nwl-mdna-margin",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "Operating margin contracted 90 basis points to 7.4% in fiscal 2024 from 8.3% in fiscal 2023. The decline reflects higher fuel and driver wage costs, partially offset by $31.2 million of savings realized from the network optimization program initiated in the second quarter."
+        },
+        {
+          "id": "nwl-mdna-liquidity",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "As of December 31, 2024, we held cash and cash equivalents of $184.6 million and had $450.0 million of undrawn capacity under our revolving credit facility, which matures in June 2027. Net cash provided by operating activities was $263.1 million in fiscal 2024 compared with $241.7 million in fiscal 2023."
+        },
+        {
+          "id": "nwl-fin-goodwill",
+          "item_section": "8",
+          "section_name": "Financial Statements",
+          "text": "The Company recorded a goodwill impairment charge of $42.0 million during the fourth quarter of fiscal 2024 related to the Freight Brokerage reporting unit. The impairment resulted from a sustained decline in spot market rates and a corresponding reduction in the reporting unit's projected cash flows. The fair value of the reporting unit was estimated using a discounted cash flow model with a weighted average cost of capital of 11.5%."
+        },
+        {
+          "id": "nwl-fin-leases",
+          "item_section": "8",
+          "section_name": "Financial Statements",
+          "text": "Operating lease right-of-use assets totaled $612.4 million and operating lease liabilities totaled $648.9 million as of December 31, 2024. The weighted average remaining lease term was 7.2 years and the weighted average discount rate was 4.8%."
+        },
+        {
+          "id": "nwl-business",
+          "item_section": "1",
+          "section_name": "Business",
+          "text": "Northwind Logistics Inc. provides contract logistics, freight brokerage, and last-mile delivery services across North America. We operate 47 distribution centers totaling 21.3 million square feet and a fleet of approximately 4,100 tractors. Our ten largest customers accounted for 34% of fiscal 2024 revenue."
+        }
+      ]
+    },
+    {
+      "accession_no": "0000000000-24-000002",
+      "cik": "0000000002",
+      "company_name": "Calder Biosciences Corp.",
+      "ticker": "CLBS",
+      "form_type": "10-K",
+      "fiscal_year": 2024,
+      "filed_date": "2025-03-03",
+      "passages": [
+        {
+          "id": "clbs-risk-trial",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "Our lead product candidate, CB-207, is in a Phase 3 registrational trial for moderate to severe plaque psoriasis. Clinical trials are expensive and their outcomes are uncertain; interim results are not necessarily predictive of final results. If the trial fails to meet its primary endpoint, we would not be able to submit a new drug application on our anticipated timeline, and our share price would likely decline substantially."
+        },
+        {
+          "id": "clbs-risk-concentration",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "We rely on a single third-party contract manufacturing organization for the drug substance used in CB-207. We do not currently have an alternate qualified supplier. Any interruption at this facility, including as a result of regulatory action or natural disaster, could delay our clinical program by twelve months or more."
+        },
+        {
+          "id": "clbs-risk-going-concern",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "We have incurred net losses in each year since inception and had an accumulated deficit of $781.3 million as of December 31, 2024. We expect our existing cash, cash equivalents, and marketable securities of $412.8 million to fund operations into the first quarter of fiscal 2027. We will require additional capital to complete development and commercialization of CB-207."
+        },
+        {
+          "id": "clbs-mdna-rd",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "Research and development expenses increased to $268.4 million in fiscal 2024 from $211.9 million in fiscal 2023. The $56.5 million increase was primarily attributable to $38.1 million of higher clinical trial costs as the CB-207 Phase 3 program expanded to 214 sites, and $12.7 million of increased headcount-related expense."
+        },
+        {
+          "id": "clbs-mdna-ga",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "General and administrative expenses were $74.6 million in fiscal 2024 compared with $68.2 million in fiscal 2023. The increase reflects pre-commercial preparation activities, including the buildout of medical affairs and market access functions ahead of a potential CB-207 launch."
+        },
+        {
+          "id": "clbs-fin-collab",
+          "item_section": "8",
+          "section_name": "Financial Statements",
+          "text": "In August 2024, the Company entered into a collaboration and license agreement with a global pharmaceutical partner for ex-North America rights to CB-207. The Company received a non-refundable upfront payment of $150.0 million and is eligible to receive up to $610.0 million in development and commercial milestone payments, plus tiered royalties on net sales ranging from the low-teens to the low-twenties percentages."
+        },
+        {
+          "id": "clbs-fin-comp",
+          "item_section": "8",
+          "section_name": "Financial Statements",
+          "text": "Stock-based compensation expense was $59.8 million for the year ended December 31, 2024, of which $34.2 million was recorded in research and development expense and $25.6 million in general and administrative expense. As of December 31, 2024, unrecognized compensation cost related to unvested awards was $118.5 million, expected to be recognized over a weighted average period of 2.6 years."
+        },
+        {
+          "id": "clbs-business",
+          "item_section": "1",
+          "section_name": "Business",
+          "text": "Calder Biosciences Corp. is a clinical-stage biopharmaceutical company developing oral small-molecule therapies for immune-mediated inflammatory diseases. Our pipeline comprises CB-207 in Phase 3 for plaque psoriasis, CB-341 in Phase 2 for ulcerative colitis, and two preclinical programs. We have not generated any product revenue to date."
+        }
+      ]
+    },
+    {
+      "accession_no": "0000000000-24-000003",
+      "cik": "0000000003",
+      "company_name": "Harbor Point Bancorp",
+      "ticker": "HPBC",
+      "form_type": "10-K",
+      "fiscal_year": 2024,
+      "filed_date": "2025-02-28",
+      "passages": [
+        {
+          "id": "hpbc-risk-rates",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "Our net interest income is sensitive to changes in market interest rates. Based on our simulation model as of December 31, 2024, an instantaneous 200 basis point increase in rates would decrease net interest income over the following twelve months by 3.9%, while a 200 basis point decrease would increase it by 1.2%. These estimates depend on assumptions about deposit repricing behavior that may prove incorrect."
+        },
+        {
+          "id": "hpbc-risk-cre",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "Commercial real estate loans represented 41% of our total loan portfolio as of December 31, 2024, including $1.9 billion of office-secured exposure. Declining office occupancy in our metropolitan markets could reduce collateral values and increase charge-offs above historical levels."
+        },
+        {
+          "id": "hpbc-risk-deposits",
+          "item_section": "1A",
+          "section_name": "Risk Factors",
+          "text": "Approximately 28% of our total deposits were uninsured as of December 31, 2024. A loss of depositor confidence, whether related to our institution or to the banking sector generally, could result in rapid deposit outflows and force us to sell securities at a loss to meet liquidity needs."
+        },
+        {
+          "id": "hpbc-mdna-nim",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "Net interest margin declined to 2.81% in fiscal 2024 from 3.14% in fiscal 2023, as the cost of interest-bearing deposits rose 112 basis points while earning asset yields increased only 71 basis points. Net interest income decreased 4.6% to $743.2 million."
+        },
+        {
+          "id": "hpbc-mdna-credit",
+          "item_section": "7",
+          "section_name": "Management's Discussion and Analysis",
+          "text": "The provision for credit losses was $96.4 million in fiscal 2024 compared with $52.8 million in fiscal 2023. The increase primarily reflects deterioration in the office segment of the commercial real estate portfolio. Net charge-offs were 0.34% of average loans, up from 0.19% in the prior year."
+        },
+        {
+          "id": "hpbc-fin-capital",
+          "item_section": "8",
+          "section_name": "Financial Statements",
+          "text": "As of December 31, 2024, the Bank's common equity tier 1 capital ratio was 11.4%, its total risk-based capital ratio was 13.8%, and its tier 1 leverage ratio was 9.2%. The Bank exceeded all regulatory requirements to be considered well capitalized under the prompt corrective action framework."
+        },
+        {
+          "id": "hpbc-fin-securities",
+          "item_section": "8",
+          "section_name": "Financial Statements",
+          "text": "Held-to-maturity securities had an amortized cost of $3.42 billion and a fair value of $2.98 billion as of December 31, 2024, reflecting $440 million of gross unrealized losses attributable to increases in market interest rates since purchase. The Company has the intent and ability to hold these securities to maturity."
+        },
+        {
+          "id": "hpbc-business",
+          "item_section": "1",
+          "section_name": "Business",
+          "text": "Harbor Point Bancorp is the bank holding company for Harbor Point Bank, a state-chartered institution operating 112 branches across the mid-Atlantic. As of December 31, 2024, we had total assets of $28.6 billion, total loans of $19.4 billion, and total deposits of $23.1 billion."
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "query": "How exposed is the company to diesel fuel prices and does it hedge?",
+      "difficulty": "easy",
+      "labels": { "nwl-risk-fuel": 3, "nwl-mdna-margin": 1, "nwl-business": 0 }
+    },
+    {
+      "query": "What goodwill impairment was recorded and what drove it?",
+      "difficulty": "easy",
+      "labels": { "nwl-fin-goodwill": 3, "nwl-mdna-revenue": 1, "nwl-fin-leases": 0 }
+    },
+    {
+      "query": "Why did operating margin decline year over year?",
+      "difficulty": "medium",
+      "labels": { "nwl-mdna-margin": 3, "nwl-risk-fuel": 2, "nwl-mdna-revenue": 1 }
+    },
+    {
+      "query": "What are the upfront and milestone payments under the licensing collaboration?",
+      "difficulty": "easy",
+      "labels": { "clbs-fin-collab": 3, "clbs-business": 0 }
+    },
+    {
+      "query": "How long will the company's cash last and does it need to raise more capital?",
+      "difficulty": "medium",
+      "labels": { "clbs-risk-going-concern": 3, "clbs-mdna-rd": 1, "nwl-mdna-liquidity": 0 }
+    },
+    {
+      "query": "What drove the increase in research and development spending?",
+      "difficulty": "easy",
+      "labels": { "clbs-mdna-rd": 3, "clbs-fin-comp": 1, "clbs-mdna-ga": 1 }
+    },
+    {
+      "query": "What is the single-source manufacturing risk for the lead drug candidate?",
+      "difficulty": "medium",
+      "labels": { "clbs-risk-concentration": 3, "clbs-risk-trial": 1 }
+    },
+    {
+      "query": "How would a 200 basis point rate increase affect net interest income?",
+      "difficulty": "medium",
+      "labels": { "hpbc-risk-rates": 3, "hpbc-mdna-nim": 2 }
+    },
+    {
+      "query": "What is the office commercial real estate exposure and how is credit quality trending?",
+      "difficulty": "hard",
+      "labels": { "hpbc-risk-cre": 3, "hpbc-mdna-credit": 3, "hpbc-fin-capital": 0 }
+    },
+    {
+      "query": "What are the unrealized losses on held-to-maturity securities?",
+      "difficulty": "easy",
+      "labels": { "hpbc-fin-securities": 3, "hpbc-risk-deposits": 1 }
+    },
+    {
+      "query": "What portion of deposits is uninsured?",
+      "difficulty": "easy",
+      "labels": { "hpbc-risk-deposits": 3, "hpbc-business": 1 }
+    },
+    {
+      "query": "Is the bank well capitalized under regulatory requirements?",
+      "difficulty": "easy",
+      "labels": { "hpbc-fin-capital": 3, "hpbc-business": 0 }
+    }
+  ]
+}
